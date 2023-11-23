@@ -2,11 +2,15 @@ import { OnChange, OnSubmit } from "@types"
 import axios from "axios"
 import { createSignal } from "solid-js"
 
+const is_production = import.meta.env["VITE_PRODUCTION"] === "production"
+
 const sanitizeInput = (input: string) => {
   return input.trim()
 }
 
 function App() {
+
+  
 
   const [inputValue, setInputValue] = createSignal("")
 
@@ -17,12 +21,12 @@ function App() {
   // Event handler for form submission
   const handleSubmit = async (e: OnSubmit) => {
     e.preventDefault(); // keeps page from reloading
-
+    const target_url = is_production ? "https://flask-render-example-x3ol.onrender.com" : "http://127.0.0.1:8080"
     try {
       // Send the sanitized input to the server using Axios
       console.log("Sending Data:", inputValue());
       const response = await axios.post(
-        "http://127.0.0.1:8080/test",
+        `${target_url}/test`,
         {
           data: inputValue(),
         },
