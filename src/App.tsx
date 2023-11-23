@@ -29,7 +29,7 @@ function App() {
       const response = await axios.post(
         `${target_url}/test-df`,
         {
-          data: inputValue(),
+          message: inputValue(),
         },
         {
           withCredentials: true,
@@ -41,7 +41,7 @@ function App() {
 
       // Handle the response from the server (you can customize this part)
       console.log("Server response:", response.data);
-      setDialogFlowResponse(response.data)
+      setDialogFlowResponse(response.data["response"])
     } catch (error) {
       // Handle errors (you can customize this part)
       console.error("Error sending data:", error);
