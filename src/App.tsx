@@ -13,6 +13,7 @@ function App() {
   
 
   const [inputValue, setInputValue] = createSignal("")
+  const [dialogFlowResponse, setDialogFlowResponse] = createSignal("")
 
   const handleInputChange = (e: OnChange) => {
     setInputValue(sanitizeInput(e.target.value))
@@ -26,7 +27,7 @@ function App() {
       // Send the sanitized input to the server using Axios
       console.log("Sending Data:", inputValue());
       const response = await axios.post(
-        `${target_url}/test`,
+        `${target_url}/test-df`,
         {
           data: inputValue(),
         },
@@ -40,6 +41,7 @@ function App() {
 
       // Handle the response from the server (you can customize this part)
       console.log("Server response:", response.data);
+      setDialogFlowResponse(response.data)
     } catch (error) {
       // Handle errors (you can customize this part)
       console.error("Error sending data:", error);
@@ -63,7 +65,7 @@ function App() {
         </div>
         <div class="flex h-full flex-col pt-10">
           <div class="w-[50%] self-center">Response:</div>
-          <div class="h-full"></div>
+          <div class="h-full">{dialogFlowResponse()}</div>
         </div>
       </div>
     </>
